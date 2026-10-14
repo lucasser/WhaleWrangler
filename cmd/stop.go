@@ -19,7 +19,7 @@ package cmd
 import (
 	"fmt"
 
-	"forgejo.islandianet.net/flames/docker-manager/helpers"
+	"forgejo.islandianet.net/flames/whale-wrangler/helpers"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )

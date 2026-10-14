@@ -16,7 +16,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 package main
 
-import "forgejo.islandianet.net/flames/docker-manager/cmd"
+import "forgejo.islandianet.net/flames/whale-wrangler/cmd"
 
 func main() {
 	cmd.Execute()
