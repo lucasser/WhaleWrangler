@@ -64,9 +64,9 @@ func refresh(pull bool) {
 
 	fmt.Println()
 
-	helpers.ReloadCaddy(config)
-
 	startStopDockerServices(config, pull)
+
+	helpers.ReloadCaddy(config)
 }
 
 func startStopDockerServices(config helpers.Services, pull bool) {

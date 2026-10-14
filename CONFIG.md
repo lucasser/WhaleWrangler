@@ -4,13 +4,23 @@ The config yaml file defines a working directory, and contains an array of servi
 ```yaml
 working_directory: base directory of docker compose projects
 ```
+The entire setup revolves around caddy. Set it up here.
+
+```yaml
+caddy_service:
+  base_dir: directory of your caddy composefile if docker, or config if native.
+  services_dir: the directory the service caddyfiles will live in relative to base_dir. You will need to import the individual .caddy files from there in your Caddyfile.
+  reload_command: The command to reload your caddy. if using docker, it'll be `docker exec caddy caddy reload --adapter caddyfile --config /etc/caddy/Caddyfile` if not, `caddy reload --adapter caddyfile --config [PATH TO CADDYFILE]`
+```
+If using caddy as a docker service, make sure to declare it as one in the next step.
+
 There are currently two supported types of services: docker compose, and just a caddyfile
 
 ### Docker compose config params:
 
 ```yaml
 Name of the service/project:
-	project_directory: directory with compose file
+	project_directory: directory with compose file relative to working_directory
 	enabled: boolean whether service should be autostarted
 	caddyfile:
 		name: filename of generated .caddy file.

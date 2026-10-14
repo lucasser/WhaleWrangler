@@ -1,0 +1,155 @@
+# Example configuration for Igna
+# This file defines services and their respective configuration parameters for deployment via Docker Compose.
+
+working_directory: /home/igna/docker/
+
+# Igna has caddy as a docker service.
+caddy_service:
+  base_dir: /home/igna/docker/caddy/
+  services_dir: user-config/services/
+  reload_command: docker exec caddy caddy reload --adapter caddyfile --config /etc/caddy/Caddyfile
+
+docker_services:
+  forgejo: # Version control service (https://forgejo.org/)
+    project_directory: forgejo
+    enabled: true
+    caddyfile:
+      name: forgejo
+      params:
+      - name: forgejo
+        server_ip: forgejo
+        subdomain: forgejo
+        port: 3000
+
+  immich: # Photo storage (https://immich.app)
+    project_directory: immich
+    enabled: true
+    caddyfile:
+      name: immich
+      params:
+      - name: immich
+        port: 2283
+        subdomain: immich
+        server_ip: immich_server
+
+  wikijs: # personal wiki (https://js.wiki)
+    project_directory: wiki.js
+    enabled: true
+    caddyfile:
+      name: wikijs
+      params:
+      - name: wikijs
+        port: 3000
+        subdomain: wiki
+        server_ip: wikijs
+
+  degoog: # Search engine (https://github.com/degoog-org/degoog)
+    project_directory: degoog
+    enabled: true
+    caddyfile:
+      name: degoog
+      params:
+      - name: degoog
+        server_ip: degoog
+        subdomain: search
+        port: 4444
+
+  penpot: # GUI design webapp (https://penpot.app/)
+    project_directory: penpot
+    enabled: false
+    caddyfile:
+      name: penpot
+      params:
+      - name: penpot
+        server_ip: penpot
+        subdomain: penpot
+        port: 8080
+
+  opencloud: # Selfhosted cloud (https://opencloud.eu/)
+    project_directory: opencloud-compose
+    enabled: true
+    caddyfile:
+      name: opencloud
+      params:
+        - name: cloud
+          server_ip: opencloud
+          subdomain: cloud
+          port: 9200
+        - name: collabora
+          server_ip: collabora
+          subdomain: collabora
+          port: 9980
+        - name: wopi
+          server_ip: collaboration
+          subdomain: wopi
+          port: 9300
+
+  vane: # AI Search engine (https://github.com/ItzCrazyKns/Vane)
+    project_directory: vane
+    enabled: false
+    caddyfile:
+      name: vane
+      params:
+        - name: vane
+          server_ip: vane
+          subdomain: vane
+          port: 3000
+
+  vaultwarden: # Password manager (https://github.com/dani-garcia/vaultwarden)
+    project_directory: vaultwarden
+    enabled: true
+    caddyfile:
+      name: vaultwarden
+      params:
+        - name: vaultwarden
+          port: 80
+          server_ip: vaultwarden
+          subdomain: vault
+
+  findmydevice: # FindMyDevice and location history (https://gitlab.com/fmd-foss/fmd-android)
+    project_directory: FindMyDevice
+    enabled: true
+    caddyfile:
+      name: findmydevice
+      params:
+        - name: findmydevice
+          port: 8080
+          server_ip: findmydevice
+          subdomain: locate
+
+############ CADDY FILE ONLY ############
+caddy_services:
+  webmin:
+    enabled: true
+    caddyfile:
+      name: webmin
+      params:
+        - name: webmin
+          port: 10000
+          server_ip: host.docker.internal
+          subdomain: webmin
+          flags: "{\ntransport http {\nread_buffer 0\nwrite_buffer 0\ntls_insecure_skip_verify\nversions 1.1\n}\n}"
+
+  Octussy_printer: # Caddy configs for Octussy 3d printer
+    enabled: false
+    caddyfile:
+      name: klipper
+      params:
+        - name: fluidd
+          server_ip: klipper.islandia.net
+          subdomain: fluidd
+          port: 9000
+        - name: mainsail
+          server_ip: klipper.islandia.net
+          subdomain: mainsail
+          port: 8000
+
+  nextcloud: # More powerfull selfhosted cloud (https://nextcloud.com/)
+    enabled: true
+    caddyfile:
+      name: nextcloud
+      params:
+        - name: nextcloud
+          port: 11000
+          subdomain: nextcloud
+          server_ip: nextcloud-aio-apache
